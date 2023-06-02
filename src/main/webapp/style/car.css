@@ -1,0 +1,49 @@
+#direction-btns{
+	position: fixed;
+	left: 40%;
+	top: 30%
+}
+input[type="button"]
+{
+	
+	font-size: 30px;
+}
+input[value=' ↓']
+{
+margin-left: 35%;
+}
+input[value=' ↑']
+{
+margin-left: 35%;
+}
+
+#down_nav
+{
+	position: fixed;
+	left: 40%;
+	top: 90%;
+}
+#down_nav > div> input
+{
+	width: 5%;
+	height: 5%;
+	float: left;
+}
+#down_nav >div
+{
+	margin: 0px,30px;
+}
+#numShow
+{
+position: fixed;
+	left: 60%;
+	border: dotted;
+}
+#numShow > p
+{
+	margin: 10px,0px;
+	
+}
+
+
+

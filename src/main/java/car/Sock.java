@@ -34,6 +34,7 @@ public class Sock {
      * 接收userId
      */
     private String userId = "";
+    private int next=2;
 
     /**
      * 连接建立成功调用的方法
@@ -43,7 +44,7 @@ public class Sock {
     {
         System.out.println("come ");
         this.session = session;
-        this.userId = userId;
+        this.userId = String.valueOf(next++);
         if (webSocketMap.containsKey(userId))
         {
             webSocketMap.remove(userId);
