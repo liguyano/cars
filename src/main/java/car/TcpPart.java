@@ -6,15 +6,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TcpPart {
     private int port;
     private HashMap<Integer,Socket> socks;
+    ArrayList<ConnctThread> threads;
     private int nextId = 1;
     JSONArray messages;
     private void init()
     {
+        threads=new ArrayList<>();
         socks=new HashMap<>();
         messages=new JSONArray();
     }
@@ -32,7 +35,8 @@ public class TcpPart {
     public void start()
     {
         try {
-            new Thread(new MessageDeal(messages,socks)).start();
+            MessageDeal messTh=new MessageDeal();
+            messTh.start();
             ServerSocket serverSocket = new ServerSocket(port);
             System.out.println("Server started, listening on port " + port);
             while (true)
@@ -41,7 +45,11 @@ public class TcpPart {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Client connected: " + clientSocket.getInetAddress().getHostAddress());
                 socks.put(nextId,clientSocket);
-                new Thread(new ConnctThread(socks,nextId++,messages)).start();
+                ConnctThread con=new ConnctThread(socks,nextId++,messages);
+                messTh.add_socks(nextId-1,clientSocket);
+                messTh.add_thread(con);
+                threads.add(con);
+                con.start();
             }
 
         } catch (IOException e) {

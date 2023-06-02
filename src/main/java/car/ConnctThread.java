@@ -5,18 +5,27 @@ import com.alibaba.fastjson.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.util.HashMap;
 
-public class ConnctThread implements Runnable{
+public class ConnctThread extends Thread{
     private Socket sock;
+
+    public JSONArray getMessagese() {
+        return messagese;
+    }
+
     private JSONArray messagese;
-    private int id;
+    private int rid;
+    public int get_Id() {
+        return rid;
+    }
+
+
     public ConnctThread(HashMap<Integer, Socket> socks,int id,JSONArray messages)
     {
-        this.id=id;
-        sock=socks.get(this.id);
+        this.rid=id;
+        sock=socks.get(this.rid);
         messagese=messages;
     }
     @Override
@@ -36,7 +45,7 @@ public class ConnctThread implements Runnable{
                 String receivedData = new String(buffer, 0, bytesRead);
                 System.out.println("Received data: " + receivedData);
                 JSONObject mess=new JSONObject();
-                mess.put("from",id);
+                mess.put("from",rid);
                 mess.put("mess",receivedData);
                 messagese.add(mess);
             }
