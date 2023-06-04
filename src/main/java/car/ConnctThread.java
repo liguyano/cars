@@ -6,27 +6,27 @@ import com.alibaba.fastjson.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ConnctThread extends Thread{
     private Socket sock;
 
-    public JSONArray getMessagese() {
+    public ArrayList<String> getMessagese() {
         return messagese;
     }
 
-    private JSONArray messagese;
+    private ArrayList<String> messagese;
     private int rid;
     public int get_Id() {
         return rid;
     }
 
 
-    public ConnctThread(HashMap<Integer, Socket> socks,int id,JSONArray messages)
+    public ConnctThread(Socket s)
     {
-        this.rid=id;
-        sock=socks.get(this.rid);
-        messagese=messages;
+        sock=s;
+        messagese=new ArrayList<>();
     }
     @Override
     public void run() {
