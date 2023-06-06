@@ -11,8 +11,6 @@ public class Sock2 {
     private Socket sock;
     private int port=7001;
     private String password="wwpdsg";
-
-
     private int connect_statues;
     /*
     * not connect 0
@@ -24,6 +22,7 @@ public class Sock2 {
     }
 
     public static final Logger log = LogManager.getLogger(Sock2.class);
+    private ConnctThread connctThread;
     public Sock2()
     {
         connect_statues=0;
@@ -41,6 +40,10 @@ public class Sock2 {
             log.error("when send "+me);
             log.error(e);
         }
+    }
+    public String get_message()
+    {
+        return connctThread.getAmessage();
     }
     public void waitSlave()
     {
@@ -60,6 +63,8 @@ public class Sock2 {
                     {
                         log.info("right");
                         connect_statues=1;
+                        connctThread=new ConnctThread(sock);
+                        connctThread.start();
                         break;
                     }else {
                         sock.close();
@@ -68,11 +73,8 @@ public class Sock2 {
                     }
                 }
             }
-
         } catch (IOException e) {
             log.error(e);
         }
-
-
     }
 }

@@ -1,6 +1,9 @@
 var socket;
 function car(msg) {
 sendMessage(msg);
+$.post("/car/car","command="+msg),function () {
+    
+};
 }
 function openSocket() {
     if(typeof(WebSocket) == "undefined") {

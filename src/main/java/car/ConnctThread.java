@@ -17,12 +17,18 @@ public class ConnctThread extends Thread{
     }
 
     private ArrayList<String> messagese;
-    private int rid;
-    public int get_Id() {
-        return rid;
+    public String getAmessage()
+    {
+        try {
+            String re= messagese.get(0);
+            messagese.remove(0);
+            return re;
+        }catch (java.lang.IndexOutOfBoundsException e)
+        {
+            return "";
+        }
+
     }
-
-
     public ConnctThread(Socket s)
     {
         sock=s;
@@ -44,16 +50,11 @@ public class ConnctThread extends Thread{
                 // Convert the byte array to a string and print it
                 String receivedData = new String(buffer, 0, bytesRead);
                 System.out.println("Received data: " + receivedData);
-                JSONObject mess=new JSONObject();
-                mess.put("from",rid);
-                mess.put("mess",receivedData);
-                messagese.add(mess);
+                messagese.add(receivedData);
             }
         } }catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        // Read data into the buffer and return the actual number of bytes read
-
 }
 
